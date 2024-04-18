@@ -321,7 +321,7 @@
 <script th:inline="javascript">
   const board_update = () => {
     const boardPass = document.getElementById("sportBoard-pass").value; /*사용자가 입력한 값을 가져오는 부분*/
-    const passDB = [[${sportBoard.boardPass}]]; /*DB에서 가져온 비밀번호*/
+    const passDB = [[${sportBoard.boardPass}]]; 
     debugger;
     if (boardPass != passDB) {
       alert("비밀번호가 틀립니다!!");
