@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            max-width: 560px;
+            display: block;
+            margin-top: 170px;
+            margin-bottom: 30px;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+
+        }
+        .menu-bar {
+            width: 100%;
+            height: 140px;
+            position: fixed;
+            text-align: center;
+            top: 0;
+            left: 0;
+            background: white;
+            border: 1px solid #dadada;
+            /*border-radius: 5px;*/
+            border: none;
+        }
+        .menu-bar>h2>a{
+            text-decoration: none;
+            color: #03c75a;
+            font-size: 45px;
+        }
+
+        .idInput {
+            width: 485px;
+            height: 50px;
+            outline: none;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        .idInput:focus{
+            border-color: #03c75a;
+        }
+        .passInput{
+            width: 485px;
+            height: 50px;
+            outline: none;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .passInput:focus{
+            border-color: #03c75a;
+        }
+
+        .loginButton {
+            width: 250px;
+            height: 55px;
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            float: left;
+            margin-right: 4px;
+        }
+        .signUpButton{
+            width: 250px;
+            height: 55px;
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            font-size: 20px;
+
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-left: 4px;
+        }
+
+        .advertisement {
+            width: 565px;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<div class="menu-bar">
+    <h2 style="margin-top: 85px; font-weight: bold"><a href="/" >Tree community</a></h2>
+</div>
+
+<div class="container">
+    <div class="py-5 text-center">
+        <h2 style="font-weight: bold">로그인</h2>
+    </div>
+        <form action="/member/login" method="post" onsubmit="loginChk()" class="px-4 py-3">
+            <div class="form-group">
+                <input  type="text" class="idInput" id="memberId" name="memberId" placeholder="아이디">
+            </div>
+            <div class="form-group">
+                <input type="password" class="passInput" id="memberPass" name="memberPass" placeholder="비밀번호">
+            </div>
+<!--            <input type="submit" value="로그인">-->
+            <hr class="my-4">
+            <div class="row">
+                    <button  type="submit" class="loginButton">로그인</button>
+                    <button type="button" class="signUpButton" onclick="memberSave()">회원가입</button>
+            </div>
+
+        </form>
+
+</div>
+<div class="advertisement">
+    <a href="https://smartstore.naver.com/diyhomes">
+    <img src="/img/loginAD.png" />
+    </a>
+</div>
+</body>
+<script th:inline="JavaScript">
+    const memberSave = () =>{
+        location.href = "/member/save"
+    }
+
+    const loginChk = () => {
+        var memberId = document.getElementById("memberId").value.trim();
+        var memberPass = document.getElementById("memberPass").value.trim();
+
+        if (memberId == null || memberId == "") {
+            alert("로그인 정보를 입력해 주세요.")
+            return false;
+        }else if(memberPass == null || memberPass == ""){
+            alert("비밀번호를 입력해 주세요.");
+            return false;
+        }
+        return true;
+
+    };
+</script>
+</html>

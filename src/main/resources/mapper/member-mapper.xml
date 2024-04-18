@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Member">
+    <insert id="save" parameterType="member">
+        insert into board_members(memberName, memberId, memberPass, nickName, memberEmail)
+        values (#{memberName}, #{memberId}, #{memberPass}, #{nickName}, #{memberEmail})
+    </insert>
+    <select id="login" parameterType="member" resultType="member">
+        select * from board_members where memberId=#{memberId} and memberPass=#{memberPass}
+    </select>
+    <select id="idChk" parameterType="member" resultType="member">
+        select * from board_members where memberId=#{memberId}
+    </select>
+    <select id="FindAll" resultType="member">
+        select id, memberName, memberId, memberPass, nickName, memberEmail, fileAttached
+        from board_members
+    </select>
+    <select id="findById" parameterType="Long" resultType="member">
+        select id, memberName, memberId, nickName, memberEmail, fileAttached
+        from board_members where id=#{id} limit 1
+    </select>
+    <update id="update">
+        update board_members
+        set nickName=#{nickName}, memberEmail=#{memberEmail},
+            fileAttached=CASE WHEN #{fileAttached} IS NULL OR #{fileAttached} = '' THEN 0 ELSE #{fileAttached} END
+        where id=#{id}
+    </update>
+    <insert id="saveFile" parameterType="memberFile">
+        insert into member_files(originalFileName, storedFileName, memid)
+        values (#{originalFileName}, #{storedFileName}, #{memid})
+    </insert>
+    <select id="findFile" parameterType="Long" resultType="memberFile">
+        select * from member_files where memid=#{memid} order by createdAt desc limit 1
+    </select>
+    <delete id="fileDelete" parameterType="Long">
+        delete from member_files where memid=#{memid}
+    </delete>
+
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="travelReply">
+    <insert id="save" parameterType="travelReply" keyProperty="id">
+        insert into travel_board_reply(bno, writer, content, replyPass)
+        values (#{bno},#{writer},#{content},#{replyPass})
+
+    </insert>
+    <select id="findById" parameterType="Long" resultType="travelReply">
+        select id, bno, writer, content,
+        date_format(createdAt, "%Y-%m-%d %H:%i:%s") as createdAt from travel_board_reply
+        where bno=#{bno}
+    </select>
+    <select id="findAll" resultType="travelReply">
+        select id, writer, content, date_format(createdAt, "%Y-%m-%d %H:%i:%s") as createdAt
+        from travel_board_reply where bno=#{bno} order by id desc
+    </select>
+    <delete id="delete" parameterType="Long">
+        delete from travel_board_reply where bno=#{bno} or id=#{id}
+    </delete>
+
+
+</mapper>

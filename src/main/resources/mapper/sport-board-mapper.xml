@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SportBoard">
+    <insert id="save" parameterType="sportBoard" useGeneratedKeys="true" keyProperty="id">
+        insert into board_sport_table(boardTitle, boardWriter, boardPass, boardContents, fileAttached)
+        values (#{boardTitle}, #{boardWriter}, #{boardPass}, #{boardContents}, #{fileAttached})
+    </insert>
+    <select id="sportFindAll" resultType="sportBoard">
+        select id, boardTitle, boardWriter, boardHits, date_format(createdAt, "%Y-%m-%d") as createdAt
+        from board_sport_table order by id desc
+    </select>
+    <select id="findByIdCount" resultType="int" >
+        select count(id) from board_sport_table where boardWriter =#{memberId}
+    </select>
+    <update id="updateHits" parameterType="Long">
+        update board_sport_table set boardHits=boardHits+1 where id=#{id}
+    </update>
+    <select id="findById" parameterType="Long" resultType="sportBoard">
+        select id, boardTitle, boardWriter, boardPass, boardContents, boardHits,
+        date_format(createdAt, "%Y-%m-%d %H:%i:%s") as createdAt, fileAttached
+        from board_sport_table where id=#{id}
+    </select>
+    <update id="update">
+        update board_sport_table set boardTitle=#{boardTitle}, boardContents=#{boardContents}
+        where id=#{id}
+    </update>
+    <delete id="delete" parameterType="Long">
+        delete from board_sport_table where id=#{id}
+    </delete>
+    <insert id="saveFile" parameterType="boardFile">
+        insert into board_file_table(originalFileName, storedFileName, boardId)
+        values (#{originalFileName}, #{storedFileName}, #{boardId})
+    </insert>
+    <select id="findFile" parameterType="Long" resultType="boardFile">
+        select * from board_file_table where boardId = #{id}
+    </select>
+    <select id="pagingList" parameterType="java.util.HashMap" resultType="sportBoard">
+        SELECT id, boardTitle, boardWriter, boardHits, DATE(createdAt) AS createdAt
+        FROM board_sport_table
+        ORDER BY id DESC
+        LIMIT #{start}, #{limit};
+    </select>
+    <select id="sportBoardCount" resultType="Integer">
+        select count(id) from board_sport_table
+    </select>
+    <select id="searchByKeyword" parameterType="java.util.HashMap" resultType="sportBoard">
+        select id, boardTitle, boardWriter, boardHits, date_format(createdAt, "%Y-%m-%d") as createdAt
+        from board_sport_table
+        where boardTitle like concat('%', #{keyword}, '%')
+        order by id desc
+    </select>
+</mapper>

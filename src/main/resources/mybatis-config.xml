@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias type="com.toyproject.board.dto.BoardDTO" alias="board"></typeAlias>
+        <typeAlias type="com.toyproject.board.dto.BoardFileDTO" alias="boardFile"></typeAlias>
+        <typeAlias type="com.toyproject.board.dto.MemberFileDTO" alias="memberFile"></typeAlias>
+        <typeAlias type="com.toyproject.board.dto.MemberDTO" alias="member"></typeAlias>
+        <typeAlias type="com.toyproject.board.dto.SportBoardDTO" alias="sportBoard"></typeAlias>
+        <typeAlias type="com.toyproject.board.dto.EtcBoardDTO" alias="etcBoard"></typeAlias>
+        <typeAlias type="com.toyproject.board.dto.TravelBoardDTO" alias="travelBoard"></typeAlias>
+        <typeAlias type="com.toyproject.board.dto.ReplyBoardDTO" alias="replyBoard"></typeAlias>
+        <typeAlias type="com.toyproject.board.dto.ReplyDTO" alias="reply"></typeAlias>
+        <typeAlias type="com.toyproject.board.dto.SportReplyDTO" alias="sportReply"></typeAlias>
+        <typeAlias type="com.toyproject.board.dto.EtcReplyDTO" alias="etcReply"></typeAlias>
+        <typeAlias type="com.toyproject.board.dto.TravelReplyDTO" alias="travelReply"></typeAlias>
+    </typeAliases>
+</configuration>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            max-width: 560px;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            margin-top: 180px;
+        }
+        .menu-bar {
+            width: 100%;
+            height: 70px;
+            position: fixed;
+            text-align: center;
+            top: 0;
+            left: 0;
+            background: white;
+            border: 1px solid #dadada;
+            border: none;
+        }
+        .menu-bar>h2>a{
+            text-decoration: none;
+            color: #03c75a;
+            font-size: 45px;
+        }
+        .memberIdChkButton{
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            padding: 1px 5px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .memberSaveButton {
+            width: 250px;
+            height: 55px;
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            float: left;
+            margin-right: 4px;
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+        .cancelButton{
+            width: 250px;
+            height: 55px;
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-left: 4px;
+        }
+        .saveDiv {
+            margin: 0 auto;
+        }
+        label{
+            font-weight: bold;
+        }
+        .saveInput:focus {
+            border-color: #03c75a;
+
+        }
+        .saveInput{
+            width: 530px;
+            height: 50px;
+            outline: none;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        .saveContain{
+            padding-top: 2rem !important;
+            padding-bottom: 2rem !important;
+            text-align: center !important;
+        }
+
+    </style>
+</head>
+<body>
+<div class="menu-bar">
+    <h2 style="margin-top: 60px; font-weight: bold"><a href="/">Tree community</a></h2>
+</div>
+<div class="container">
+    <div class="saveContain" >
+        <h2 style="font-weight: bold">회원 가입</h2>
+    </div>
+
+        <form action="/member/save" method="post" onsubmit="return memberChk()" >
+            <div id="Test">
+                <label for="memberId">아이디</label>
+                <input type="text" id="memberId" name="memberId" class="saveInput" placeholder="아이디" required>
+                <button type="button" class="memberIdChkButton" id="memberIdChk">중복확인</button>
+            </div>
+            <div class="saveDiv">
+                <label for="memberPass">비밀번호</label>
+                <input type="password" id="memberPass" name="memberPass" class="saveInput" placeholder="비밀번호" required>
+            </div>
+            <div class="saveDiv">
+                <label for="memberPassChk">비밀번호 확인</label>
+                <input type="password" id="memberPassChk" onblur="passChk()" name="memberPassChk" class="saveInput" placeholder="비밀번호" required>
+                <p id="Message"></p>
+            </div>
+            <div >
+                <label for="nickName">닉네임</label>
+                <input type="text" id="nickName" name="nickName" class="saveInput" placeholder="닉네임" required>
+            </div>
+            <div >
+                <label for="memberName">이름</label>
+                <input type="text" id="memberName" name="memberName" class="saveInput" placeholder="이름" required>
+            </div>
+            <div class="saveDiv">
+                <label for="memberEmail">이메일</label>
+                <input type="text" id="memberEmail" name="memberEmail" class="saveInput" placeholder="이메일" required>
+                <p id="emailMsg"></p>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="row">
+                    <button type="submit" class="memberSaveButton"  onsubmit="memberChk()" >회원가입</button>
+                    <button type="button" class="cancelButton"
+                            onclick="location.href='/'">취소</button>
+            </div>
+        </form>
+
+
+    </div>
+<th:block th:if="${memberList != null}" >
+    <p id="true" style="color:red;">
+        중복
+    </p>
+    <p id="false" style="color:blue;">
+        사용가능
+    </p>
+</th:block>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script th:inline="javascript">
+
+    $("#memberIdChk").click(function (){
+        var memberId = $("#memberId").val();
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "/idcheck.do",
+            data : memberId,
+            //dataType: "json",
+            // success : function (data){
+            //     alert("성공!");
+            //     console.log("dat: "+ data + "입니다.");
+            // },
+            // error : function(error) {
+            //     debugger;
+            //     alert("error : " + error);
+            //     console.log("error다!!")
+            // }
+        }).done(function (fragment) {
+            $('#Test').append(fragment);
+            setTimeout(function(){
+                $('#true').remove();
+                $('#false').remove();
+            },1000);
+        });
+    })
+
+    function passChk(){
+        var password = document.getElementById('memberPass');
+        var passwordChk = document.getElementById('memberPassChk');
+        var Message = document.getElementById('Message');
+        var correctColor = "#00f";
+        var wrongColor = "#ff0000";
+
+        if (password.value == passwordChk.value) {
+            Message.style.color = correctColor;
+            Message.innerHTML = "비밀번호 일치";
+        } else {
+            Message.style.color = wrongColor;
+            Message.innerHTML = "비밀번호 불일치"
+        }
+    }
+
+    function memberChk(){
+        var password = document.getElementById('memberPass');
+        var passwordChk = document.getElementById('memberPassChk');
+        var memberEmail = document.getElementById("memberEmail");
+        var Message = document.getElementById("emailMsg");
+
+        var correctColor = "#00f";
+        var wrongColor = "#ff0000";
+
+        if (password.value != passwordChk.value || emailCheck(memberEmail.value) == false) {
+            alert("입력한 부분이 올바르지 않습니다.");
+            if (emailCheck(memberEmail.value) ==false){
+                memberEmail.focus();
+                Message.innerHTML = "사용 불가능한 이메일 입니다.";
+                Message.style.color = wrongColor;
+                return false;
+            }
+
+            return false;
+        } else {
+            return true;
+        }
+
+
+    }
+
+    function emailCheck(email_address){
+        email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+        if (!email_regex.test(email_address)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+
+</script>
+</html>

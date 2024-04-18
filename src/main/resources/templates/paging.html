@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul,li{
+            list-style: none;
+        }
+        ul{
+            height: 100%;
+        }
+        .container{
+            max-width: 680px;
+            padding-top: 100px;
+        }
+        .menu-bar {
+            width: 100%;
+            height: 60px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+        }
+
+        .login {
+            width: 250px;
+            position: fixed;
+            right: 0;
+            margin-right: 30px;
+            margin-top: 20px;
+            text-align: center;
+            top: 100px;
+        }
+        .side-menu {
+            width: 300px;
+            height: 855px;
+            position: fixed;
+            top: 100px;
+            left: 0;
+            margin-top: 20px;
+            margin-left: 20px;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+        }
+        .advertisement {
+            width: 250px;
+            height: 655px;
+            text-align: center;
+            margin-top: 20px;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        .bennerimg{
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+        }
+        a{
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .idBox {
+            margin-bottom: 10px;
+        }
+        .idInput {
+            outline: none;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .idInput:focus{
+            border-color: #03c75a;
+        }
+        .passBox{
+            margin-bottom: 10px;
+        }
+        .passBox>input{
+            outline: none;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .loginButton{
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+        }
+        .signUpButton{
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+        }
+
+        .idWarp {
+            padding: 20px;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+        }
+
+        .idWarp>a {
+            margin-top: 15px;
+            padding-bottom: 23px;
+            font-weight: bold;
+        }
+        .logoutButton{
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 0 auto;
+            margin-top: 30px;
+        }
+
+        #saveFreeBoard{
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+        }
+        #freeBoardBar, #sportBoardBar, #etcBoardBar, #travelBoardBar {
+            width: 250px;
+            line-height: 33px;
+            text-align: center;
+            border-color: black;
+        }
+         .pagingBox {
+             display: flex;
+             justify-content: center;
+             align-items: center;
+         }
+
+        .pagingBox > div {
+            margin: 0 5px;
+        }
+
+    </style>
+
+</head>
+<body>
+<div style="display: flex; justify-content: space-between; padding:5px;" class="menu-bar">
+    <h2>
+        <a href="/" style="font-weight: bold; color: #03c75a">Tree community</a>
+    </h2>
+    <ul style="display: flex; justify-content: space-between">
+        <li id="freeBoardBar" style="border-right-style: solid; border-color: #dadada"><a href="http://localhost:8080/list" style="font-weight: bold">자유</a></li>
+        <li id="sportBoardBar" style="border-right-style: solid; border-color: #dadada"><a href="http://localhost:8080/sportBoard/list" style="font-weight: bold">스포츠</a></li>
+        <li id="etcBoardBar" style="border-right-style: solid; border-color: #dadada"><a href="http://localhost:8080/etcBoard/list" style="font-weight: bold">교육/금융/IT</a></li>
+        <li id="travelBoardBar"><a href="http://localhost:8080/travelBoard/list" style="font-weight: bold">여행/음식</a></li>
+    </ul>
+    <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+</div>
+
+<div class="side-menu">
+    <a href="/save">글작성</a>
+    <a href="/list">글목록</a>
+</div>
+
+<div class="container" >
+    <div class="py-5 text-center" style="padding-bottom: 1rem !important;">
+        <h2>자유게시글</h2>
+    </div>
+
+
+    <hr class="my-4">
+
+<div class="row">
+    <div class="col">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    id="saveFreeBoard"
+                    onclick="location.href='/save';"
+                    th:style="${session.loginId == null ? 'display:none' : 'display:block'}"
+                    type="button">글쓰기
+            </button>
+        </div>
+
+    </div>
+</div>
+    <hr class="my-4">
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성시간</th>
+            <th>조회수</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:each="board , i: ${boardListPage}">
+        <td th:text="${board.id}"></td>
+        <td>
+            <a th:text="${board.boardTitle}" th:href="@{|/${board.id}|}"></a>
+        </td>
+        <td th:text="${board.boardWriter}"></td>
+        <td th:text="${board.createdAt}"></td>
+        <td th:text="${board.boardHits}"></td>
+    </tr>
+    </tbody>
+</table>
+    <div class="pagingBox">
+        <!-- 현재 페이지가 1페이지면 이전 글자만 보여줌 -->
+        <div th:if="${paging.page <= 1}">
+            <span>[이전]</span>
+        </div>
+        <!-- 1페이지가 아닌 경우에는 [이전]을 클릭하면 현재 페이지보다 1 작은 페이지 요청 -->
+        <div th:if="${paging.page > 1}">
+            <a th:href="@{/paging(page=${paging.page -1 })}">[이전]</a>
+        </div>
+        <!-- 페이지 번호 출력 -->
+        <div th:each="i : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+            <div th:if="${i eq paging.page}">
+                <!-- 요청한 페이지에 있는 경우 현재 페이지 번호는 텍스트만 보이게 -->
+                <span th:text="${i}"></span>
+            </div>
+            <div th:unless="${i eq paging.page}">
+                <!-- 요청한 페이지에 없는 경우 페이지 번호에 링크 걸어줌 -->
+                <a th:href="@{/paging(page=${i})}" th:text="${i}"></a>
+            </div>
+        </div>
+
+        <!-- 다음 페이지로 이동 링크 출력 -->
+        <div th:if="${paging.page ge paging.maxPage}">
+            <span>[다음]</span>
+        </div>
+        <div th:unless="${paging.page ge paging.maxPage}">
+            <a th:href="@{/paging(page=${paging.page+1})}">[다음]</a>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- 로그인 -->
+<div class="login">
+    <form action="/member/login" method="post">
+        <div class="idWarp" th:if="${session.loginId} == null" th:style="${session.loginId == null ? 'display:block' : 'display:none'}">
+            <div class="idBox">
+                <input type="text" class="idInput" id="loginId" name="memberId" placeholder="아이디">
+            </div>
+            <div class="passBox">
+                <input type="password" class="passInput" id="loginPass" name="memberPass" placeholder="비밀번호">
+            </div>
+            <button type="submit" class="loginButton">로그인</button>
+            <button class="signUpButton" th:style="${session.loginId != null ? 'display:none' : 'display:inline'}" onclick="location.href='/member/save'" type="button">회원가입</button>
+        </div>
+    </form>
+    <div class="idWarp" th:if="${session.loginId} != null" th:style="${session.loginId == null ? 'display:none' : 'display:block'}">
+        <a th:if="${session.loginId} != null" th:text="${session.loginId} + '님 반갑습니다.'" th:style="${session.loginId == null ? 'display:none' : 'display:block'}"></a>
+        <!--            <span th:text="'게시글 수: ' + ${findByIdCount}" th:style="${session.loginId == null ? 'display:none' : 'display:block'}"></span>-->
+        <button onclick="logout()"
+                class="logoutButton"
+                th:style="${session.loginId == null ? 'display:none' : 'display:block'}">로그아웃</button>
+    </div>
+    <div class="advertisement">
+        <img class="bennerimg" src="/img/main2.png">
+    </div>
+</div>
+</body>
+<script th:inline="JavaScript">
+    const logout = () =>{
+        location.href = "/member/logout"
+    }
+</script>
+</html>

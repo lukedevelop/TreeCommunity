@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<link th:href="@{/css/bootstrap.min.css}">-->
+    <!--href="css/bootstrap.min.css" rel="stylesheet"-->
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        ul,li{
+            list-style: none;
+        }
+        ul{
+            height: 100%;
+        }
+        .table
+        {
+            padding: 0 20px;
+        }
+
+        .menu-bar {
+            width: 100%;
+            height: 60px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+        }
+
+        .container{
+            max-width: 560px;
+            padding-top: 100px;
+        }
+        .boardContainer {
+            width: 60%;
+            height: 83%;
+            top: 120px;
+            left: 20%;
+            position: fixed;
+            text-align: center;
+            border: none;
+        }
+        .board1,.board2,.board3,.board4 {
+            width: 47%;
+            height: 50%;
+            margin-bottom: 15px;
+            display: inline-block;
+            vertical-align: middle;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+        }
+        .login{
+            width: 250px;
+            position: fixed;
+            right: 0;
+            margin-right: 30px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .side-menu {
+            width: 300px;
+            height: 855px;
+            position: fixed;
+            top: 100px;
+            left: 0;
+            margin-top: 20px;
+            margin-left: 20px;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .sideImg{
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+        }
+        .advertisement {
+            width: 250px;
+            height: 655px;
+            text-align: center;
+            margin-top: 20px;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        .bennerimg{
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .passBox{
+            margin-bottom: 10px;
+        }
+        .passBox>input{
+            outline: none;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .idBox {
+            margin-bottom: 10px;
+        }
+        .idInput {
+            outline: none;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .idWarp {
+            padding: 20px;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+        }
+        .idInput:focus{
+            border-color: #03c75a;
+        }
+        .loginButton{
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+        }
+        .signUpButton{
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+        }
+        .logoutButton{
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 0 auto;
+            margin-top: 30px;
+        }
+
+        .idWarp>a {
+            margin-top: 15px;
+            padding-bottom: 23px;
+            font-weight: bold;
+        }
+
+
+        #freeBoardBar, #sportBoardBar, #etcBoardBar, #travelBoardBar {
+            width: 250px;
+            line-height: 33px;
+            text-align: center;
+            border-color: black;
+            position: relative;
+        }
+        .underbar
+        {
+            width: 0;
+            height: 5px;
+            bottom: 0;
+            left: 0;
+            background: greenyellow;
+            position: absolute;
+            transition: all 1s;
+        }
+        #freeBoardBar:hover .underbar
+        , #sportBoardBar:hover .underbar
+        ,#travelBoardBar:hover .underbar
+        ,#etcBoardBar:hover .underbar {
+            width: 100%;
+        }
+
+        .menu >li > a{
+            text-decoration: none;
+            color: inherit;
+            font-size: 1.1em;
+        }
+        .title1,.title2,.title3,.title4 {
+            width: 40px;
+            height: 40px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div style="display: flex; justify-content: space-between; padding:5px;" class="menu-bar">
+    <h2>
+        <a href="/" style=" font-size: 35px; font-family: 'Times New Roman', serif; font-weight: bold; color: #03c75a">Tree community</a>
+    </h2>
+
+    <ul style="display: flex; justify-content: space-between" class="menu">
+        <li id="freeBoardBar" style="border-right-style: solid; border-color: #dadada">
+            <a href="http://localhost:8080/list" style="font-weight: bold">
+                자유
+                <div class="underbar"></div>
+            </a>
+        </li>
+        <li id="sportBoardBar" style="border-right-style: solid; border-color: #dadada">
+            <a href="http://localhost:8080/sportBoard/list" style="font-weight: bold">
+                스포츠
+                <div class="underbar"></div>
+            </a>
+        </li>
+        <li id="etcBoardBar" style="border-right-style: solid; border-color: #dadada">
+            <a href="http://localhost:8080/etcBoard/list" style="font-weight: bold">
+                교육/금융/IT
+                <div class="underbar"></div>
+            </a>
+        </li>
+        <li id="travelBoardBar">
+            <a href="http://localhost:8080/travelBoard/list" style="font-weight: bold">
+                여행/음식
+                <div class="underbar"></div>
+            </a>
+        </li>
+    </ul>
+    <form class="d-flex" role="search" style="visibility: hidden">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+</div>
+
+<div class="container">
+    <div class="side-menu">
+        <img class="sideImg" src="/img/side.png" alt="">
+    </div>
+
+    <div class="boardContainer">
+        <div class="board1">
+            <div class="table">
+                <div>
+                    <td colspan="4"><span style="text-align: center; color: blueviolet; font-weight: bold"><a href="/list">자유게시판</a></span></td>
+                </div>
+                <ul style="display: flex;justify-content: space-between;border-bottom: #dadada solid 1px;" th:each="freeboard , i: ${freeBoardList}" th:if="${i.index} < 9">
+                    <li class="title1"  style="background-image: url('/img/tree.png')"></li>
+                    <li style="display: flex;padding: 0 10px;align-items: center;justify-content: center;width: 70%;">
+                        <a style="display: block;width: 100%;white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" th:text="${freeboard.boardTitle}" th:href="@{|/${freeboard.id}|}"></a>
+                    </li>
+                    <li style="display: block;align-items: center;width: 50px;text-align: center;justify-content: center;line-height: 40px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; " th:text="${freeboard.boardWriter}"></li>
+                    <li style="display: flex;align-items: center;width: 50px;text-align: center;justify-content: center;" th:text="${freeboard.boardHits}"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="board2">
+            <div class="table">
+                <div>
+                    <td colspan="4"><span style="text-align: center; color: blueviolet; font-weight: bold"><a href="/sportBoard/list">스포츠</a></span></td>
+                </div>
+                <ul style="display: flex;justify-content: space-between;border-bottom: #dadada solid 1px;"
+                    th:each="sportboard , i: ${sportBoardList}" th:if="${i.index} < 9">
+                    <li class="title1"  style="background-image: url('/img/tree.png')"></li>
+                    <li style="display: flex;padding: 0 10px;align-items: center;justify-content: center;width: 70%;white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">
+                        <a style="display: block;width: 100%;white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" th:text="${sportboard.boardTitle}" th:href="@{|sportBoard/${sportboard.id}|}"></a>
+                    </li>
+                    <li style="display: flex;align-items: center;width: 50px;text-align: center;justify-content: center;" th:text="${sportboard.boardWriter}"></li>
+                    <li style="display: flex;align-items: center;width: 50px;text-align: center;justify-content: center;" th:text="${sportboard.boardHits}"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="board3">
+            <div class="table">
+                <div>
+                    <td colspan="4"><span style="text-align: center; color: blueviolet; font-weight: bold"><a href="/etcBoard/list">교육/금융/IT</a></span></td>
+                </div>
+                <ul style="display: flex;justify-content: space-between;border-bottom: #dadada solid 1px;" th:each="etcboard , i: ${etcBoardList}" th:if="${i.index} < 9">
+                    <li class="title1"  style="background-image: url('/img/tree.png')"></li>
+                    <li style="display: flex;padding: 0 10px;align-items: center;justify-content: center;width: 70%;">
+                        <a style="display: block;width: 100%;white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" th:text="${etcboard.boardTitle}" th:href="@{|etcBoard/${etcboard.id}|}"></a>
+                    </li>
+                    <li style="display: flex;align-items: center;width: 50px;text-align: center;justify-content: center;" th:text="${etcboard.boardWriter}"></li>
+                    <li style="display: flex;align-items: center;width: 50px;text-align: center;justify-content: center;" th:text="${etcboard.boardHits}"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="board4">
+            <div class="table">
+                <div>
+                    <td colspan="4"><span style="text-align: center; color: blueviolet; font-weight: bold"><a href="/travelBoard/list">여행/음식</a></span></td>
+                </div>
+                <ul style="display: flex;justify-content: space-between;border-bottom: #dadada solid 1px;" th:each="travelboard , i: ${travelBoardList}" th:if="${i.index} < 9">
+                    <li class="title1"  style="background-image: url('/img/tree.png')"></li>
+                    <li style="display: flex;padding: 0 10px;align-items: center;justify-content: center;width: 70%;">
+                        <a style="display: block;width: 100%;white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" th:text="${travelboard.boardTitle}" th:href="@{|travelBoard/${travelboard.id}|}"></a>
+                    </li>
+                    <li style="display: flex;align-items: center;width: 50px;text-align: center;justify-content: center;" th:text="${travelboard.boardWriter}"></li>
+                    <li style="display: flex;align-items: center;width: 50px;text-align: center;justify-content: center;" th:text="${travelboard.boardHits}"></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- 로그인 -->
+<div class="login">
+    <form action="/member/login" method="post" onclick="loginChk()">
+        <div class="idWarp" th:if="${session.loginId} == null" th:style="${session.loginId == null ? 'display:block' : 'display:none'}">
+            <div class="idBox">
+                <input type="text" class="idInput" id="loginId" name="memberId" placeholder="아이디">
+            </div>
+            <div class="passBox">
+                <input type="password" class="passInput" id="loginPass" name="memberPass" placeholder="비밀번호">
+            </div>
+            <button type="submit" class="loginButton">로그인</button>
+            <button class="signUpButton" th:style="${session.loginId != null ? 'display:none' : 'display:inline'}" onclick="location.href='/member/save'" type="button">회원가입</button>
+        </div>
+    </form>
+    <div  class="idWarp" th:if="${session.loginId} != null" th:style="${session.loginId == null ? 'display:none' : 'display:block'}">
+        <div th:style="${member.fileAttached == 1 ? 'display:block' : 'display:none'}" th:if="${member.fileAttached == 1}">
+            <div th:each="memberFile: ${memberFileList}" class="imgBox" style="width: 50px; height: 50px; border: 1px solid black">
+                <img th:src="@{|/upload/${memberFile.storedFileName}|}" alt="" width="50px" height="50px" id="memberFile" >
+            </div>
+        </div>
+        <div th:style="${member.fileAttached != 1 ? 'display:block' : 'display:none'}">
+            <img src="/img/profile.png" alt="" width="50px" height="50px"  >
+        </div>
+        <a  th:if="${session.loginId} != null"  th:text="${session.loginId} + '님 반갑습니다.'" th:style="${session.loginId == null ? 'display:none' : 'display:block'}"></a>
+        <div>
+            <a th:href="@{'/member/info/' + ${session.Id}}" th:if="${session.loginId} != null" th:style="${session.loginId == null ? 'display:none' : 'display:block'}">개인정보</a>
+        </div>
+        <button onclick="logout()"
+                class="logoutButton"
+                th:style="${session.loginId == null ? 'display:none' : 'display:block'}">로그아웃</button>
+    </div>
+    <div class="advertisement">
+        <img   class="bennerimg" src="/img/main2.png">
+    </div>
+</div>
+
+
+
+</body>
+<script th:inline="javascript">
+    const logout = () =>{
+        location.href = "/member/logout"
+    }
+
+
+
+</script>
+</html>

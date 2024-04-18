@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    ul,li{
+      list-style: none;
+    }
+    ul{
+      height: 100%;
+    }
+    .container{
+      max-width: 680px;
+      padding-top: 100px;
+    }
+    .menu-bar {
+      width: 100%;
+      height: 60px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: white;
+      border: 1px solid #dadada;
+      border-radius: 5px;
+    }
+
+    .login {
+      width: 250px;
+      position: fixed;
+      right: 0;
+      margin-right: 30px;
+      margin-top: 20px;
+      text-align: center;
+      top: 100px;
+
+    }
+    .side-menu {
+      width: 300px;
+      height: 855px;
+      position: fixed;
+      top: 100px;
+      left: 0;
+      margin-top: 20px;
+      margin-left: 20px;
+      border: 1px solid #dadada;
+      border-radius: 5px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .sideImg{
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 100%;
+    }
+    .advertisement {
+      width: 250px;
+      height: 655px;
+      text-align: center;
+      margin-top: 20px;
+      border: 1px solid #dadada;
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+    .bennerimg{
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 100%;
+    }
+
+    #board-pass:focus{
+      border-color: #03c75a;
+    }
+
+    #listButton{
+      background: #03c75a;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+    }
+    #editButton {
+      background: #03c75a;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+    }
+    #deleteButton {
+      background: #03c75a;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+    }
+    #replyDeleteButton{
+      background: #03c75a;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+    }
+    #replySaveButton{
+      background: #525252;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+
+    a{
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .idBox {
+      margin-bottom: 10px;
+    }
+    .idInput {
+      outline: none;
+      border: 1px solid #dadada;
+      border-radius: 5px;
+      padding: 5px;
+    }
+    .idInput:focus{
+      border-color: #03c75a;
+    }
+    .passBox{
+      margin-bottom: 10px;
+    }
+    .passBox>input{
+      outline: none;
+      border: 1px solid #dadada;
+      border-radius: 5px;
+      padding: 5px;
+    }
+    .loginButton{
+      background: #03c75a;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+    }
+    .signUpButton{
+      background: #03c75a;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+    }
+    .logoutButton{
+      background: #03c75a;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      margin: 0 auto;
+      margin-top: 30px;
+    }
+
+    .idWarp {
+      padding: 20px;
+      border: 1px solid #dadada;
+      border-radius: 5px;
+    }
+
+    .idWarp>a {
+      margin-top: 15px;
+      padding-bottom: 23px;
+      font-weight: bold;
+    }
+    .logoutButton{
+      background: #03c75a;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      margin: 0 auto;
+      margin-top: 30px;
+    }
+
+    #freeBoardBar, #sportBoardBar, #etcBoardBar, #travelBoardBar {
+      width: 250px;
+      line-height: 33px;
+      text-align: center;
+      border-color: black;
+      position: relative;
+    }
+    .underbar
+    {
+      width: 0;
+      height: 5px;
+      bottom: 0;
+      left: 0;
+      background: greenyellow;
+      position: absolute;
+      transition: all 1s;
+    }
+    #freeBoardBar:hover .underbar
+    , #sportBoardBar:hover .underbar
+    ,#travelBoardBar:hover .underbar
+    ,#etcBoardBar:hover .underbar {
+      width: 100%;
+    }
+    .menu >li > a{
+      text-decoration: none;
+      color: inherit;
+      font-size: 1.1em;
+    }
+  </style>
+
+</head>
+<body>
+<div style="display: flex; justify-content: space-between; padding:5px;" class="menu-bar">
+  <h2>
+    <a href="/" style=" font-size: 35px; font-family: 'Times New Roman', serif; font-weight: bold; color: #03c75a">Tree community</a>
+  </h2>
+  <ul style="display: flex; justify-content: space-between" class="menu">
+    <li id="freeBoardBar" style="border-right-style: solid; border-color: #dadada">
+      <a href="http://localhost:8080/list" style="font-weight: bold">
+        자유
+        <div class="underbar"></div>
+      </a>
+    </li>
+    <li id="sportBoardBar" style="border-right-style: solid; border-color: #dadada">
+      <a href="http://localhost:8080/sportBoard/list" style="font-weight: bold">
+        스포츠
+        <div class="underbar"></div>
+      </a>
+    </li>
+    <li id="etcBoardBar" style="border-right-style: solid; border-color: #dadada">
+      <a href="http://localhost:8080/etcBoard/list" style="font-weight: bold">
+        교육/금융/IT
+        <div class="underbar"></div>
+      </a>
+    </li>
+    <li id="travelBoardBar">
+      <a href="http://localhost:8080/travelBoard/list" style="font-weight: bold">
+        여행/음식
+        <div class="underbar"></div>
+      </a>
+    </li>
+  </ul>
+  <form class="d-flex" role="search" style="visibility: hidden">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+</div>
+
+
+<div class="container">
+
+  <div class="side-menu">
+    <img class="sideImg" src="/img/side.png" alt="">
+  </div>
+
+  <div class="py-5 text-center">
+      <h2 th:text="${travelBoard.boardTitle}"></h2>
+  </div>
+
+  <hr class="my-4">
+
+  <div>
+    <label for="travelBoardTitle">제목</label>
+    <input type="text" id="travelBoardTitle" name="travelBoardTitle" class="form-control" th:value="${travelBoard.boardTitle}" readonly>
+  </div>
+  <div>
+    <label for="travelBoardWriter">작성자</label>
+    <input type="text" id="travelBoardWriter" name="travelBoardWriter" class="form-control" th:value="${travelBoard.boardWriter}" readonly>
+  </div>
+  <div>
+    <label for="createdAt">날짜</label>
+    <input type="text" id="createdAt" name="createdAt" class="form-control" th:value="${travelBoard.createdAt}" readonly>
+  </div>
+  <div>
+    <label for="travelBoardHits">조회수</label>
+    <input type="text" id="travelBoardHits" name="travelBoardHits" class="form-control" th:value="${travelBoard.boardHits}" readonly>
+  </div>
+
+  <div class="table-responsive">
+    <label for="travelBoardContents">내용</label>
+    <table style="width: 100%" id="travelBoardContents">
+      <thead class="thead-light">
+      <tr>
+        <td class="align-top" style=" border: 1px solid #dadada; border-radius: 5px; white-space:pre;" th:text="${travelBoard.boardContents}"></td>
+      </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div th:style="${session.loginId == travelBoard.boardWriter ? 'display:block' : 'display:none'}">
+    <label for="travelBoard-pass">비밀번호</label>
+    <input type="password" id="travelBoard-pass" name="travelBoardPass" class="form-control" style="width: 25%; height: 34px">
+  </div>
+
+
+
+  <div th:if="${travelBoard.fileAttached == 1}">
+    <label for="boardFile">이미지</label>
+    <div th:each="boardFile: ${travelBoardFileList}" class="text-center">
+      <img th:src="@{|/upload/${boardFile.storedFileName}|}" alt="" width="200" height="200" id="boardFile" >
+    </div>
+  </div>
+
+  <hr class="my-4">
+
+  <div class="row">
+    <div class="col">
+      <button class="w-100 btn btn-primary btn-lg" id="listButton" onclick="listReq()">목록</button>
+    </div>
+    <div class="col">
+      <button class="w-100 btn btn-primary btn-lg" id="editButton" onclick="updateReq()"
+              th:style="${session.loginId == travelBoard.boardWriter ? 'display:block' : 'display:none'}">수정</button>
+    </div>
+    <div class="col">
+      <button class="w-100 btn btn-primary btn-lg" id="deleteButton" onclick="deleteReq()"
+              th:style="${session.loginId == travelBoard.boardWriter ? 'display:block' : 'display:none'}">삭제</button>
+    </div>
+  </div>
+
+  <!-- 댓글 -->
+  <div class="card-footer" style="background-color: white; border-top: none;">
+    <form  action="/travelReply/save" method="post" >
+      <div class="form-group" id="replyContentBox">
+        <input th:value="${session.loginId}" id="writer" name="writer" style="font-weight: bold; border-style: none" readonly>
+        <textarea type="text" id="content" name="content" class="form-control" style="margin-top: 10px" placeholder="댓글을 입력하세요"></textarea>
+      </div>
+      <input type="hidden" name="bno" th:value="${travelBoard.id}" />
+      <button type="submit" id="replySaveButton" class="btn btn-primary">등록</button>
+    </form>
+    <div class="comments mt-3">
+    </div>
+  </div>
+  <hr class="my-4">
+
+  <div class="card-body"  th:each="reply, i: ${travelReplyList}">
+    <p th:text="${reply.writer}" style="font-weight: bold"></p>
+    <p th:text="${reply.content}" style="white-space: pre-wrap"></p>
+    <p th:text="${reply.createdAt}"></p>
+    <!--    <button onclick="replyDelete()">삭제</button>-->
+    <!--    <button class="w-20 btn btn-primary btn-sm" onclick="replyDelete()"
+                th:style="${session.loginId == reply.writer ? 'display:block' : 'display:none'}">삭제</button>-->
+    <div th:style="${session.loginId == reply.writer ? 'display:block' : 'display:none'}">
+      <input type="button" id="replyDeleteButton" class="w-20 btn btn-primary btn-sm" value="삭제"
+             th:onclick="|location.href='@{|/travelReply/delete/${reply.id}/${travelBoard.id}|}'|" />
+
+    </div>
+    <hr class="my-4">
+  </div>
+</div>
+
+<!--로그인-->
+<div class="login">
+  <form action="/member/login" method="post">
+    <div class="idWarp" th:if="${session.loginId} == null" th:style="${session.loginId == null ? 'display:block' : 'display:none'}">
+      <div class="idBox">
+        <input type="text" class="idInput" id="loginId" name="memberId" placeholder="아이디">
+      </div>
+      <div class="passBox">
+        <input type="password" class="passInput" id="loginPass" name="memberPass" placeholder="비밀번호">
+      </div>
+      <button type="submit" class="loginButton">로그인</button>
+      <button class="signUpButton" th:style="${session.loginId != null ? 'display:none' : 'display:inline'}" onclick="location.href='/member/save'" type="button">회원가입</button>
+    </div>
+  </form>
+  <div class="idWarp" th:if="${session.loginId} != null" th:style="${session.loginId == null ? 'display:none' : 'display:block'}">
+    <div th:style="${member.fileAttached == 1 ? 'display:block' : 'display:none'}" th:if="${member.fileAttached == 1}">
+      <div th:each="memberFile: ${memberFileList}" class="imgBox" style="width: 50px; height: 50px; border: 1px solid black">
+        <img th:src="@{|/upload/${memberFile.storedFileName}|}" alt="" width="50px" height="50px" id="memberFile" >
+      </div>
+    </div>
+    <div th:style="${member.fileAttached != 1 ? 'display:block' : 'display:none'}">
+      <img src="/img/profile.png" alt="" width="50px" height="50px"  >
+    </div>
+    <a th:if="${session.loginId} != null" th:text="${session.loginId} + '님 반갑습니다.'" th:style="${session.loginId == null ? 'display:none' : 'display:block'}"></a>
+    <div>
+      <a th:href="@{'/member/info/' + ${session.Id}}" th:if="${session.loginId} != null" th:style="${session.loginId == null ? 'display:none' : 'display:block'}">개인정보</a>
+    </div>
+    <button onclick="logout()"
+            class="logoutButton"
+            th:style="${session.loginId == null ? 'display:none' : 'display:block'}">로그아웃</button>
+  </div>
+  <div class="advertisement">
+    <img class="bennerimg" src="/img/main2.png">
+  </div>
+</div>
+
+</body>
+<script th:inline="javascript">
+  const listReq = () => {
+    location.href = "/travelBoard/list";
+  }
+  const updateReq = () => {
+    location.href = `/travelBoard/update/[[${travelBoard.id}]]`; /*`` : 스크립트 문법이며 변수값을 같이 표현할때 사용*/
+  }
+  const deleteReq = () => {
+    const boardPass = document.getElementById("travelBoard-pass").value; /*사용자가 입력한 값을 가져오는 부분*/
+    const passDB = [[${travelBoard.boardPass}]]; /*DB에서 가져온 비밀번호*/
+    if (boardPass == passDB) {
+      alert("게시글이 삭제 되었습니다.")
+      location.href = `/travelBoard/delete/[[${travelBoard.id}]]`;
+      updateForm.submit();
+    } else {
+      alert("비밀번호가 틀립니다!!");
+    }
+  }
+  const logout = () =>{
+    location.href = "/member/logout"
+  }
+</script>
+</html>

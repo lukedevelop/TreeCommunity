@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        .profile {
+            width: 800px;
+            height: 800px;
+            border: solid ;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            max-width: 560px;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            margin-top: 180px;
+        }
+        .menu-bar {
+            width: 100%;
+            height: 140px;
+            position: fixed;
+            text-align: center;
+            top: 0;
+            left: 0;
+            background: white;
+            border: 1px solid #dadada;
+            border: none;
+        }
+        .menu-bar>h2>a{
+            text-decoration: none;
+            color: #03c75a;
+            font-size: 45px;
+        }
+        .memberIdChkButton{
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            padding: 1px 5px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .memberSaveButton {
+            width: 250px;
+            height: 55px;
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            float: left;
+            margin-right: 4px;
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+        .cancelButton{
+            width: 250px;
+            height: 55px;
+            background: #03c75a;
+            color: #fff;
+            font-weight: bold;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-left: 4px;
+        }
+        .saveDiv {
+            margin: 0 auto;
+        }
+        label{
+            font-weight: bold;
+        }
+        .saveInput:focus {
+            border-color: #03c75a;
+
+        }
+        .saveInput{
+            width: 530px;
+            height: 50px;
+            outline: none;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        .saveContain{
+            padding-top: 2rem !important;
+            padding-bottom: 2rem !important;
+            text-align: center !important;
+        }
+    </style>
+</head>
+<body>
+<div class="menu-bar">
+    <h2 style="margin-top: 85px; font-weight: bold"><a href="/">Tree community</a></h2>
+</div>
+<div class="container">
+        <div class="saveContain" >
+            <h2 style="font-weight: bold">개인 정보</h2>
+        </div>
+        <div class="profileEdit">
+
+            <form th:action="@{|/member/info/${session.loginId}|}" method="post" enctype="multipart/form-data" onsubmit="return saveButton()">
+                <input type="text" id="id" name="id" th:value="${member.id}" style="display: none">
+                <div id="Test">
+                    <label for="memberId">아이디</label>
+                    <input type="text" id="memberId" name="memberId" class="saveInput" th:value="${member.memberId}" readonly>
+                </div>
+                <div class="saveDiv">
+                    <label for="memberName">이름</label>
+                    <input type="text" id="memberName" name="memberName" class="saveInput" th:value="${member.memberName}" readonly>
+                </div>
+                <div class="saveDiv">
+                    <label for="nickName">닉네임</label>
+                    <input type="text" id="nickName" onblur="passChk()" name="nickName" class="saveInput" th:value="${member.nickName}" required>
+                </div>
+                <div >
+                    <label for="memberEmail">이메일</label>
+                    <input type="text" id="memberEmail" name="memberEmail" class="saveInput" th:value="${member.memberEmail}" required>
+                    <p id="emailMsg"></p>
+                </div>
+                <div th:if="${member.fileAttached == 1}">
+                    <label for="boardFile">프로필 사진</label>
+                    <div th:each="memberFile: ${memberFileList}" class="text-center">
+                        <img th:src="@{|/upload/${memberFile.storedFileName}|}" alt="" width="50px" height="50px" id="boardFile" >
+                    </div>
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="file" class="form-control" id="memberFile" name="memberFile" ><br>
+                    <label class="input-group-text" for="memberFile">Upload</label>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="w-100 btn btn-primary btn-lg" onsubmit="return saveButton()" style=" border: none; background: #03c75a; color: #fff;" >저장</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="w-100 btn btn-primary btn-lg" onclick="deleteReq()" style=" border: none; background: #03c75a; color: #fff;" >사진삭제</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="w-100 btn btn-primary btn-lg" onclick="location.href='/'" style=" border: none; background: #03c75a; color: #fff;" >취소</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+</div>
+
+</body>
+<script th:inline="javascript">
+
+    const deleteReq = () => {
+        var id = document.getElementById("id").value;
+        var idDB = [[${member.id}]];
+
+        if (id == idDB){
+            alert("사진이 삭제 되었습니다.")
+            location.href = `/member/delete/[[${member.id}]]`;
+        }
+    }
+
+
+    function saveButton() {
+        var memberEmail = document.getElementById("memberEmail");
+        var Message = document.getElementById("emailMsg");
+        var wrongColor = "#ff0000";
+        if (emailCheck(memberEmail.value) == false){
+            memberEmail.focus();
+            Message.innerHTML = "사용 불가능한 이메일 입니다.";
+            Message.style.color = wrongColor;
+            return false;
+        }
+        return true;
+    }
+
+    function emailCheck(email_address){
+        email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+        if (!email_regex.test(email_address)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+</script>
+</html>
