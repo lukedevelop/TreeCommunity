@@ -41,4 +41,4 @@
 - 댓글을 통해 사용자들 간의 개인 의견 자유롭게 작성 및 삭제
 - 사용자들이 보기 편리하게 페이징 처
 
-<img width="300" alt="스크린샷 2023-01-07 오전 12 03 16" src="https://github.com/lukedevelop/TreeCommunity/assets/102365004/eed168c6-f827-4a67-af5c-83888474cced">
+<img width="800" alt="스크린샷 2023-01-07 오전 12 03 16" src="https://github.com/lukedevelop/TreeCommunity/assets/102365004/eed168c6-f827-4a67-af5c-83888474cced">
