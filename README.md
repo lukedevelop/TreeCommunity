@@ -10,8 +10,8 @@
 ## 기술 도구
 - **Java17, Springboot**
 - **MyBatis**
-- **thymeleaf, JQuery**
-- **HTML, CSS, Bootstrap ,JavaScript**
+- **thymeleaf, JavaScript, JQuery, Ajax**
+- **HTML, CSS, Bootstrap**
 - **IntelliJ,  MySQL Workbench**
 - **cafe24 호스팅, filezilla, putty**
 
