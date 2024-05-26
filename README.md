@@ -14,6 +14,7 @@
 - **HTML, CSS, Bootstrap**
 - **IntelliJ,  MySQL Workbench**
 - **cafe24 호스팅, filezilla, putty**
+- **Open Weather API**
 
 ## 기능
 - 자유, 스포츠, 여행/음식, 교육/금융/IT 게시글 작성 및 수정, 삭제
