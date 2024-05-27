@@ -44,7 +44,8 @@ public class EtcBoardService {
                 boardFileDTO.setStoredFileName(storedFileName);
                 boardFileDTO.setBoardId(saveBoard.getId());
 
-                String savePath = "C:/Users/whgml/spring_upload_files/" + storedFileName;
+                //String savePath = "C:/Users/whgml/spring_upload_files/" + storedFileName;
+                String savePath = "/treecommunity/tomcat/webapps/ROOT/WEB-INF/classes/saveimg/" + storedFileName;
                 boardFile.transferTo(new File(savePath));
                 etcBoardRepository.saveFile(boardFileDTO);
             }

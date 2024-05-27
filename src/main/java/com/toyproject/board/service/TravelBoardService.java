@@ -46,7 +46,8 @@ public class TravelBoardService {
                 boardFileDTO.setStoredFileName(storedFileName);
                 boardFileDTO.setBoardId(saveBoard.getId());
                 //파일 저장용 폴더에 파일 저장 처리
-                String savePath = "C:/Users/whgml/spring_upload_files/" + storedFileName;
+//                String savePath = "C:/Users/whgml/spring_upload_files/" + storedFileName;
+                String savePath = "/treecommunity/tomcat/webapps/ROOT/WEB-INF/classes/saveimg/" + storedFileName;
                 boardFile.transferTo(new File(savePath)); // savePath 경로에 파일이름으로 넘김.
                 //board_file_table 저장 처리
                 travelBoardRepository.saveFile(boardFileDTO);

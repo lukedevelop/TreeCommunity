@@ -1,5 +1,6 @@
 plugins {
 	id 'java'
+	id 'war'
 	id 'org.springframework.boot' version '3.1.8'
 	id 'io.spring.dependency-management' version '1.1.4'
 }
@@ -32,8 +33,9 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	//Json
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.16.1'
-
-
+	implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+	//mariadb
+	implementation'org.mariadb.jdbc:mariadb-java-client:3.1.2'
 }
 
 tasks.named('bootBuildImage') {
@@ -42,4 +44,8 @@ tasks.named('bootBuildImage') {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+bootWar {
+	enabled = true
 }

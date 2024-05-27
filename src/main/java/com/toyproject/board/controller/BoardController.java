@@ -4,6 +4,7 @@ import com.toyproject.board.dto.*;
 import com.toyproject.board.service.BoardService;
 import com.toyproject.board.service.MemberService;
 import com.toyproject.board.service.ReplyService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,9 +39,9 @@ public class BoardController {
     }
 
     @PostMapping("/save")
-    public String save(BoardDTO boardDto) throws IOException {
+    public String save(BoardDTO boardDto, HttpServletRequest request) throws IOException {
         log.info("boardDto = " + boardDto);
-        boardService.save(boardDto);
+        boardService.save(boardDto, request);
         return "redirect:/list";
     }
 

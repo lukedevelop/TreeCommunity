@@ -202,25 +202,25 @@
   </h2>
   <ul style="display: flex; justify-content: space-between" class="menu">
     <li id="freeBoardBar" style="border-right-style: solid; border-color: #dadada">
-      <a href="http://localhost:8080/list" style="font-weight: bold">
+      <a href="http://treecommunity.cafe24.com/list" style="font-weight: bold">
         자유
         <div class="underbar"></div>
       </a>
     </li>
     <li id="sportBoardBar" style="border-right-style: solid; border-color: #dadada">
-      <a href="http://localhost:8080/sportBoard/list" style="font-weight: bold">
+      <a href="http://treecommunity.cafe24.com/sportBoard/list" style="font-weight: bold">
         스포츠
         <div class="underbar"></div>
       </a>
     </li>
     <li id="etcBoardBar" style="border-right-style: solid; border-color: #dadada">
-      <a href="http://localhost:8080/etcBoard/list" style="font-weight: bold">
+      <a href="http://treecommunity.cafe24.com/etcBoard/list" style="font-weight: bold">
         교육/금융/IT
         <div class="underbar"></div>
       </a>
     </li>
     <li id="travelBoardBar">
-      <a href="http://localhost:8080/travelBoard/list" style="font-weight: bold">
+      <a href="http://treecommunity.cafe24.com/travelBoard/list" style="font-weight: bold">
         여행/음식
         <div class="underbar"></div>
       </a>
@@ -262,7 +262,12 @@
       <label for="boardContents">내용</label>
       <textarea id="boardContents" name="boardContents" cols="30" rows="10" class="form-control" th:text="${sportBoard.boardContents}"> </textarea>
     </div>
-
+    <div th:if="${board.fileAttached == 1}">
+      <label for="boardFile">이미지</label>
+      <div th:each="boardFile: ${boardFileList}" class="text-center">
+        <img th:src="@{|/upload/${boardFile.storedFileName}|}" alt="" width="200" height="200" id="boardFile" >
+      </div>
+    </div>
     <hr class="my-4">
 
     <div class="row">
@@ -321,7 +326,7 @@
 <script th:inline="javascript">
   const board_update = () => {
     const boardPass = document.getElementById("sportBoard-pass").value; /*사용자가 입력한 값을 가져오는 부분*/
-    const passDB = [[${sportBoard.boardPass}]]; 
+    const passDB = [[${sportBoard.boardPass}]];
     debugger;
     if (boardPass != passDB) {
       alert("비밀번호가 틀립니다!!");

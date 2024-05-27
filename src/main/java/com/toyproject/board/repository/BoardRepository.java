@@ -14,9 +14,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BoardRepository {
     private final SqlSessionTemplate sql;
-    /*public void save(BoardDTO boardDto) {
-        sql.insert("Board.save", boardDto); //Board 는 mapper.xml의 namespace 이다. insert의 id: save는 쿼리문을 담고있는 태그
-    }*/
+
 
     public BoardDTO save(BoardDTO boardDTO) {
         sql.insert("Board.save", boardDTO);

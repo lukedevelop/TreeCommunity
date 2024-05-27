@@ -48,7 +48,7 @@ public class HomeController {
         }
 
         log.info("boardDTOList = " + boardDTOList);
-        return "index";
+        return "index.html";
     }
 
 

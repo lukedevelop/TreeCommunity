@@ -5,6 +5,7 @@ import com.toyproject.board.dto.BoardFileDTO;
 import com.toyproject.board.dto.MemberDTO;
 import com.toyproject.board.dto.PageDTO;
 import com.toyproject.board.repository.BoardRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class BoardService {
         boardRepository.save(boardDto);
     }*/
 
-    public void save(BoardDTO boardDTO) throws IOException {
+    public void save(BoardDTO boardDTO, HttpServletRequest request) throws IOException {
         if (boardDTO.getBoardFile().get(0).isEmpty()) {
             //파일 없다.
             boardDTO.setFileAttached(0);
@@ -55,7 +56,9 @@ public class BoardService {
             boardFileDTO.setStoredFileName(storedFileName);
             boardFileDTO.setBoardId(saveBoard.getId());
             //파일 저장용 폴더에 파일 저장 처리
-            String savePath = "C:/Users/whgml/spring_upload_files/" + storedFileName;
+//            String savePath = "C:/Users/whgml/spring_upload_files/" + storedFileName;
+                String savePath = "/treecommunity/tomcat/webapps/ROOT/WEB-INF/classes/saveimg/" + storedFileName;
+//            String savePath = request.getServletContext().getRealPath( "resources/saveimg/" + storedFileName);
             boardFile.transferTo(new File(savePath)); // savePath 경로에 파일이름으로 넘김.
             //board_file_table 저장 처리
             boardRepository.saveFile(boardFileDTO);

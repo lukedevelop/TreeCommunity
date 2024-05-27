@@ -64,11 +64,37 @@
         }
         .side-menu {
             width: 300px;
-            height: 855px;
+            height: 800px;
             position: fixed;
             top: 100px;
             left: 0;
             margin-top: 20px;
+            margin-left: 20px;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .weatherBox {
+            width: 400px;
+            height: 303px;
+            margin-left: 124px;
+            border-radius: 5px;
+            transform: translateX(-50%);
+            left: 0;
+        }
+        .weather_icon{
+            margin-bottom: 55px;
+            margin-left: 40px;
+        }
+
+        .sideBox {
+            width: 300px;
+            height: 530px;
+            position: fixed;
+            left: 0;
+            margin-top: 283px;
             margin-left: 20px;
             border: 1px solid #dadada;
             border-radius: 5px;
@@ -210,25 +236,25 @@
 
     <ul style="display: flex; justify-content: space-between" class="menu">
         <li id="freeBoardBar" style="border-right-style: solid; border-color: #dadada">
-            <a href="http://localhost:8080/list" style="font-weight: bold">
+            <a href="http://treecommunity.cafe24.com/list" style="font-weight: bold">
                 자유
                 <div class="underbar"></div>
             </a>
         </li>
         <li id="sportBoardBar" style="border-right-style: solid; border-color: #dadada">
-            <a href="http://localhost:8080/sportBoard/list" style="font-weight: bold">
+            <a href="http://treecommunity.cafe24.com/sportBoard/list" style="font-weight: bold">
                 스포츠
                 <div class="underbar"></div>
             </a>
         </li>
         <li id="etcBoardBar" style="border-right-style: solid; border-color: #dadada">
-            <a href="http://localhost:8080/etcBoard/list" style="font-weight: bold">
+            <a href="http://treecommunity.cafe24.com/etcBoard/list" style="font-weight: bold">
                 교육/금융/IT
                 <div class="underbar"></div>
             </a>
         </li>
         <li id="travelBoardBar">
-            <a href="http://localhost:8080/travelBoard/list" style="font-weight: bold">
+            <a href="http://treecommunity.cafe24.com/travelBoard/list" style="font-weight: bold">
                 여행/음식
                 <div class="underbar"></div>
             </a>
@@ -242,8 +268,32 @@
 
 <div class="container">
     <div class="side-menu">
+        <div class="sideBox" >
         <img class="sideImg" src="/img/side.png" alt="">
+        </div>
+        <!-- 날씨api -->
+        <div class="weatherBox" style="background-color : rgb(101, 178, 255); padding : 40px;color : #fff; height : 280px">
+
+            <div class="weather_icon"></div>
+
+
+            <div style="float : right; margin : -5px 0px 0px 60px; font-size : 11pt">
+                <div class="temp_min"></div>
+                <div class="temp_max"></div>
+                <div class="humidity" style="margin-right: 24px"></div>
+                <div class="wind"></div>
+                <div class="cloud" style="margin-right: 38px"></div>
+            </div>
+            <div style="float : right; margin-top : -45px;">
+                <div class="current_temp" style="font-size : 50pt"></div>
+                <div class="weather_description" style="font-size : 20pt"></div>
+                <div class="city" style="font-size : 13pt"></div>
+            </div>
+
+        </div>
     </div>
+
+
 
     <div class="boardContainer">
         <div class="board1">
@@ -348,13 +398,59 @@
 
 
 
+
 </body>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
     const logout = () =>{
         location.href = "/member/logout"
     }
 
+    var weatherIcon = {
+        '01' : 'fas fa-sun',
+        '02' : 'fas fa-cloud-sun',
+        '03' : 'fas fa-cloud',
+        '04' : 'fas fa-cloud-meatball',
+        '09' : 'fas fa-cloud-sun-rain',
+        '10' : 'fas fa-cloud-showers-heavy',
+        '11' : 'fas fa-poo-storm',
+        '13' : 'far fa-snowflake',
+        '50' : 'fas fa-smog'
+    };
 
+    // 날씨 api - 서울
+    var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+'seoul'+"&appid="+"ca2c5fb9d2d393a4836110e22d12a9d5";
+    $.ajax({
+        url: apiURI,
+        dataType: "json",
+        type: "GET",
+        async: "false",
+        success: function(resp) {
+
+            var $Icon = (resp.weather[0].icon).substr(0,2);
+            var $weather_description = resp.weather[0].main;
+            var $Temp = Math.floor(resp.main.temp- 273.15) + 'º';
+            var $humidity = '습도&nbsp;&nbsp;&nbsp;&nbsp;' + resp.main.humidity+ ' %';
+            var $wind = '바람&nbsp;&nbsp;&nbsp;&nbsp;' +resp.wind.speed + ' m/s';
+            var $city = '서울';
+            var $cloud = '구름&nbsp;&nbsp;&nbsp;&nbsp;' + resp.clouds.all +"%";
+            var $temp_min = '최저 온도&nbsp;&nbsp;&nbsp;&nbsp;' + Math.floor(resp.main.temp_min- 273.15) + 'º';
+            var $temp_max = '최고 온도&nbsp;&nbsp;&nbsp;&nbsp;' + Math.floor(resp.main.temp_max- 273.15) + 'º';
+
+
+            console.log("아이콘 클래스:", weatherIcon[$Icon]);
+            $('.weather_icon').append('<i class="' + weatherIcon[$Icon] +' fa-5x" style="height : 50px; width : 50px;"></i>');
+            $('.weather_description').prepend($weather_description);
+            $('.current_temp').prepend($Temp);
+            $('.humidity').prepend($humidity);
+            $('.wind').prepend($wind);
+            $('.city').append($city);
+            $('.cloud').append($cloud);
+            $('.temp_min').append($temp_min);
+            $('.temp_max').append($temp_max);
+        }
+    })
 
 </script>
 </html>
